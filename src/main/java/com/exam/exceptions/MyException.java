@@ -22,4 +22,10 @@ public class MyException {
 	return new ResponseEntity(error, HttpStatus.BAD_GATEWAY);
 
 }
+	@ExceptionHandler(UserFoundException.class)
+	public ResponseEntity<?> userFounException(UserFoundException e,WebRequest request){
+		System.out.println("Inside Handler UserFoundException");
+		ErrorDetails error=new ErrorDetails(new Date(), e.getMessage(), request.getDescription(false));
+		return new ResponseEntity(error,HttpStatus.ALREADY_REPORTED);
+	}
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.exam.entities.User;
 import com.exam.entities.UserRole;
+import com.exam.exceptions.UserFoundException;
 import com.exam.repo.RoleRepository;
 import com.exam.repo.UserRepository;
 import com.exam.services.UserService;
@@ -22,13 +23,13 @@ public class UserServiceImpl implements UserService{
 	
 	
 	@Override
-	public User createUser(User user, Set<UserRole> userRoles) throws Exception {
+	public User createUser(User user, Set<UserRole> userRoles) throws UserFoundException {
 		// TODO Auto-generated method stub
 		
 		User local=this.userRepository.findByUsername(user.getUsername());
 		if(local!=null) {
 			System.out.println("User already exists");
-			throw new Exception("User already exists");
+			throw new UserFoundException();
 		}
 		else {
 			for(UserRole ur:userRoles) {
